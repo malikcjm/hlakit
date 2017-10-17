@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 from __future__ import generators
 
 """
@@ -32,9 +32,10 @@ or implied, of David Huseby.
 
 import os
 import sys
-import random
+
 import unittest
 from tests.session import CommandLineOptionsTester
+
 
 def main():
     # turn off stderr output

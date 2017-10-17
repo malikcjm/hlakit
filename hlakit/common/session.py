@@ -38,14 +38,18 @@ from hlakit.common.symboltable import SymbolTable
 
 HLAKIT_VERSION = "0.8"
 
+
 class CommandLineError(Exception):
     def __init__(self, value):
         self.value = value
+
     def __str__(self):
         return str(self.value)
 
+
 class DummyOptions(object):
     pass
+
 
 class Session(object):
     """
@@ -352,10 +356,10 @@ class Session(object):
                     inline = True
         return ('program', output)
 
-    def go():
+    def go(self):
         pass
 
-    """
+
     def preprocess_file(self, f, debug=False):
         pp_lexer = self.pp_lexer(debug)
         pp_parser = self.pp_parser(debug)
@@ -367,7 +371,7 @@ class Session(object):
 
         print "Preprocessing %s..." % f
         self.push_cur_file(f)
-        self.push_cur_dir(os.path.dirname(f))
+        self.push_cur_dir(os.path.dirname(os.path.abspath(f)))
         result = pp_parser.parse(inf, lexer=pp_lexer, debug=(self.is_debug() or debug))
         self.pop_cur_dir()
         self.pop_cur_file()
@@ -407,7 +411,7 @@ class Session(object):
 
         print "Compiling %s..." % cunit[0]
         self.push_cur_file(cunit[0])
-        self.push_cur_dir(os.path.dirname(cunit[0]))
+        self.push_cur_dir(os.path.dirname(os.path.dirname(cunit[0])))
         result = parser.parse(cunit[2], lexer=lexer, debug=(self.is_debug() or debug))
         self.pop_cur_dir()
         self.pop_cur_file()
@@ -428,12 +432,12 @@ class Session(object):
         output = []
         try:
             for cunit in cunits:
-                cc = self.compile_file(cunit)
+                cc = self.compile_file(cunit, True)
                 output.append( (cunit[0], cunit[1], cunit[2], cc) )
         except RuntimeError, e:
             import pdb; pdb.set_trace()
 
         return output
-    """
+
 
 

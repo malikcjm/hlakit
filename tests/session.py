@@ -38,6 +38,7 @@ from hlakit.cpu.mos6502 import MOS6502
 from hlakit.platform.nes import NES
 from hlakit.cpu.ricoh2A0X import Ricoh2A0X
 
+
 class CommandLineOptionsTester(unittest.TestCase):
     """
     This class aggregates all of the tests for parsing command line options.
@@ -147,3 +148,24 @@ class CommandLineOptionsTester(unittest.TestCase):
         self.assertEquals(session.get_args()[0], 'foo.s')
         Types._shared_state = {}
 
+    def testPreprocess(self):
+        session = Session()
+        session.parse_args(['--cpu=6502', '--platform=NES', 'test.hla'])
+        session.initialize_target()
+        pp = session.preprocess()
+        self.assertIsNotNone(pp)
+        cc = session.compile(pp)
+        self.assertIsNotNone(cc)
+        import pprint
+        pprint.pprint(cc)
+
+    def testCompile(self):
+        session = Session()
+        session.parse_args(['--cpu=6502', '--platform=NES', 'cond.hla'])
+        session.initialize_target()
+        pp = session.preprocess()
+        self.assertIsNotNone(pp)
+        cc = session.compile(pp)
+        self.assertIsNotNone(cc)
+        import pprint
+        pprint.pprint(cc)

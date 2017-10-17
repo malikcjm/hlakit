@@ -29,6 +29,7 @@ or implied, of David Huseby.
 
 from type_ import Type_
 
+
 class StructType(Type_):
 
     def __init__(self, name, members=[]):
